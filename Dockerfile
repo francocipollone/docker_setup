@@ -19,6 +19,9 @@ RUN echo "export PS1='\[\033[01;36m\](docker)\[\033[00m\] \[\033[01;32m\]\u@${NA
     echo "alias ll='ls --color=auto -alFNh'" >> /home/${USERNAME}/.bashrc && \
     echo "alias ls='ls --color=auto -Nh'" >> /home/${USERNAME}/.bashrc
 
+RUN echo "source /opt/ros/rolling/setup.bash" >> /home/${USERNAME}/.bashrc
+RUN echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> /home/${USERNAME}/.bashrc
+
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
