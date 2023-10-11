@@ -5,12 +5,27 @@ set +e
 echo "Running the container..."
 
 CURRENT_FOLDER_PATH_PARENT="$(cd "$(dirname "$0")"; cd .. ; pwd)"
+SCRIPT_FOLDER_PATH="$(cd "$(dirname "$0")"; pwd)"
+
+# Read config file: config.yaml and obtain IMAGE_NAME
+IMAGE_NAME=$(cat ${SCRIPT_FOLDER_PATH}/config.yaml | grep -v "#" | grep "IMAGE_NAME" | cut -d " " -f 2)
+if [ -z "$IMAGE_NAME" ]; then
+    echo "Error: IMAGE_NAME not found in the config.yaml file. Using default value."
+    IMAGE_NAME="ros_dev_ws_image"
+fi
+echo "Using Image Name: $IMAGE_NAME"
+# Read config file: config.yaml and obtain CONTAINER_NAME
+CONTAINER_NAME=$(cat ${SCRIPT_FOLDER_PATH}/config.yaml | grep -v "#" | grep "CONTAINER_NAME" | cut -d " " -f 2)
+if [ -z "$CONTAINER_NAME" ]; then
+    echo "Error: CONTAINER_NAME not found in the config.yaml file. Using default value."
+    CONTAINER_NAME="ros_dev_ws_container"
+fi
+echo "Using Container Name: $CONTAINER_NAME"
+
 # Location from where the script was executed.
 RUN_LOCATION="$(pwd)"
 
 OS_VERSION=focal
-IMAGE_NAME="ros_dev_zenoh_rmw_ws_image"
-CONTAINER_NAME="ros_dev_zenoh_rmw_ws_container"
 
 SSH_PATH=/home/$USER/.ssh
 WORKSPACE_CONTAINER=/home/$(whoami)/ros_dev_zenoh_rmw_ws/

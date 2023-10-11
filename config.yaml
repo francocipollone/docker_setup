@@ -1,0 +1,2 @@
+IMAGE_NAME: ros_dev_ws_image
+CONTAINER_NAME: ros_dev_ws_container
