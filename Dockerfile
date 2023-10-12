@@ -2,9 +2,9 @@
 # Base Image
 ################################################################################
 
-ARG IMAGE=osrf/ros:rolling-desktop
+ARG BASE_IMAGE=osrf/ros:rolling-desktop
 
-FROM ${IMAGE}
+FROM ${BASE_IMAGE}
 
 USER root
 
@@ -25,7 +25,11 @@ RUN echo "export PS1='\[\033[01;36m\](docker)\[\033[00m\] \[\033[01;32m\]\u@${NA
     echo "alias ll='ls --color=auto -alFNh'" >> /home/${USERNAME}/.bashrc && \
     echo "alias ls='ls --color=auto -Nh'" >> /home/${USERNAME}/.bashrc
 
-RUN echo "source /opt/ros/rolling/setup.bash" >> /home/${USERNAME}/.bashrc
+# Check if the directory /opt/ros/ exists, and if it does, append the command to .bashrc
+RUN if [ -d /opt/ros/ ]; then \
+    echo "source /opt/ros/$(ls /opt/ros/)/setup.bash" >> /home/${USERNAME}/.bashrc; \
+    fi
+
 RUN echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> /home/${USERNAME}/.bashrc
 
 USER ${USERNAME}
