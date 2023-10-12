@@ -40,7 +40,9 @@ if sudo -g docker docker container ls -a | grep -w "${CONTAINER_NAME}$" -c &> /d
 fi
 
 xhost +
-sudo docker run -it --runtime=nvidia \
+sudo docker run -it \
+       --gpus=all \
+       -e NVIDIA_DRIVER_CAPABILITIES=all \
        -e DISPLAY=$DISPLAY \
        -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK_USER \
        -v $(dirname $SSH_AUTH_SOCK_USER):$(dirname $SSH_AUTH_SOCK_USER) \
