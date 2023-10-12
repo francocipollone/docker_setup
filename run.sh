@@ -28,7 +28,7 @@ RUN_LOCATION="$(pwd)"
 OS_VERSION=focal
 
 SSH_PATH=/home/$USER/.ssh
-WORKSPACE_CONTAINER=/home/$(whoami)/ros_dev_zenoh_rmw_ws/
+WORKSPACE_CONTAINER=/home/$(whoami)/ros_dev_ws/
 SSH_AUTH_SOCK_USER=$SSH_AUTH_SOCK
 
 # Check if name container is already taken.
