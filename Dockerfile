@@ -9,6 +9,15 @@ FROM ${BASE_IMAGE}
 USER root
 
 ################################################################################
+# Install requirements
+################################################################################
+
+# Copy requirement files and install dependencies
+COPY requirements.txt .
+RUN apt-get update && apt-get install --no-install-recommends -y $(cat requirements.txt)
+RUN rm requirements.txt
+
+################################################################################
 # Development with a user
 ################################################################################
 

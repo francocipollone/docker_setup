@@ -4,7 +4,6 @@ set +e
 
 
 SCRIPT_FOLDER_PATH="$(cd "$(dirname "$0")"; pwd)"
-CONTEXT_FOLDER_PATH="$(cd "$(dirname "$0")"; cd .. ; pwd)"
 
 # Read config file: config.yaml and obtain BASE_IMAGE
 BASE_IMAGE=$(cat ${SCRIPT_FOLDER_PATH}/config.yaml | grep -v "#" | grep "BASE_IMAGE" | cut -d " " -f 2)
@@ -35,4 +34,4 @@ sudo docker build -t $IMAGE_NAME \
      --build-arg USERNAME=$USERNAME \
      --build-arg USER_UID=$USER_UID \
      --build-arg USER_GID=$USER_GID \
-     $CONTEXT_FOLDER_PATH
+     $SCRIPT_FOLDER_PATH
