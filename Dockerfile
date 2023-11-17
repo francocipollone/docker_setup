@@ -24,6 +24,7 @@ RUN rm requirements.txt
 ARG USERNAME=ros_user
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
+ARG BASHRC_APPEND
 
 RUN groupadd --gid $USER_GID $USERNAME && \
     useradd --uid $USER_UID --gid $USER_GID -s "/bin/bash" -m $USERNAME && \
@@ -39,9 +40,17 @@ RUN if [ -d /opt/ros/ ]; then \
     echo "source /opt/ros/$(ls /opt/ros/)/setup.bash" >> /home/${USERNAME}/.bashrc; \
     fi
 
-RUN echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> /home/${USERNAME}/.bashrc
+# Check if /usr/share/colcon_argcomplete/ is installed, and if it does, append the arg complete command to .bashrc
+RUN if [ -d /usr/share/colcon_argcomplete/ ]; then \
+    echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> /home/${USERNAME}/.bashrc; \
+    fi
 
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
+
+# If BASHRC_APPEND is set, append it to .bashrc
+RUN if [ -n "${BASHRC_APPEND}" ]; then \
+    echo "${BASHRC_APPEND}" >> /home/${USERNAME}/.bashrc; \
+    fi
 
 CMD ["/bin/bash"]

@@ -19,7 +19,13 @@ if [ -z "$IMAGE_NAME" ]; then
     IMAGE_NAME="ros_dev_ws_image"
 fi
 echo "Building the docker image: $IMAGE_NAME"
-
+# Read config file: config.yaml and obtain BASHRC_APPEND
+BASHRC_APPEND=$(cat ${SCRIPT_FOLDER_PATH}/config.yaml | grep -v "#" | grep "BASHRC_APPEND" | sed 's/BASHRC_APPEND: //')
+if [ -z "$BASHRC_APPEND" ]; then
+    echo "BASHRC_APPEND not found in the config.yaml file."
+    BASHRC_APPEND=""
+fi
+echo "To append in the .bashrc file: $BASHRC_APPEND"
 
 DOCKERFILE_PATH=$SCRIPT_FOLDER_PATH/Dockerfile
 
@@ -34,4 +40,5 @@ sudo docker build -t $IMAGE_NAME \
      --build-arg USERNAME=$USERNAME \
      --build-arg USER_UID=$USER_UID \
      --build-arg USER_GID=$USER_GID \
+     --build-arg BASHRC_APPEND="$BASHRC_APPEND" \
      $SCRIPT_FOLDER_PATH

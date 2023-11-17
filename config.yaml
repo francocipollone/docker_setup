@@ -2,3 +2,4 @@ BASE_IMAGE: osrf/ros:rolling-desktop
 IMAGE_NAME: ros_dev_ws_image
 CONTAINER_NAME: ros_dev_ws_container
 WORKSPACE_FOLDER_NAME: ros_dev_ws
+BASHRC_APPEND: export TEST_VAR1=30;export TEST_VAR2=40;

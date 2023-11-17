@@ -15,7 +15,7 @@ Modify `config.yaml` and `requirements.txt` files  according to your case.
    - BASE_IMAGE: Base image to built upon. (e.g.: osrf/ros:rolling-desktop)
    - IMAGE_NAME: Name of the built image. (e.g.: ros_dev_ws_image)
    - CONTAINER_NAME: Name of the container. (e.g.: ros_dev_ws_container)
-
+   - BASHRC_APPEND: Commands to be added to the .bashrc file. (e.g.: export MY_VAR=30;export RULE=True)
  - requirements.txt: List of `apt` packages that you want to install in the image.
 
 Build image
