@@ -22,13 +22,21 @@ if [ -z "$CONTAINER_NAME" ]; then
 fi
 echo "Using Container Name: $CONTAINER_NAME"
 
+# Read config file: config.yaml and obtain WORKSPACE_FOLDER_NAME
+WORKSPACE_FOLDER_NAME=$(cat ${SCRIPT_FOLDER_PATH}/config.yaml | grep -v "#" | grep "WORKSPACE_FOLDER_NAME" | cut -d " " -f 2)
+if [ -z "$WORKSPACE_FOLDER_NAME" ]; then
+    echo "Error: WORKSPACE_FOLDER_NAME not found in the config.yaml file. Using default value."
+    WORKSPACE_FOLDER_NAME="ros_dev_ws"
+fi
+echo "Using Workspace Folder Name: $WORKSPACE_FOLDER_NAME"
+
 # Location from where the script was executed.
 RUN_LOCATION="$(pwd)"
 
 OS_VERSION=focal
 
 SSH_PATH=/home/$USER/.ssh
-WORKSPACE_CONTAINER=/home/$(whoami)/ros_dev_ws/
+WORKSPACE_CONTAINER=/home/$(whoami)/$WORKSPACE_FOLDER_NAME/
 SSH_AUTH_SOCK_USER=$SSH_AUTH_SOCK
 
 # Check if name container is already taken.
@@ -38,6 +46,8 @@ if sudo -g docker docker container ls -a | grep -w "${CONTAINER_NAME}$" -c &> /d
    \nor just initialize it with a different name.\n"
    exit 1
 fi
+
+echo "Workspace folder is located at $WORKSPACE_CONTAINER"
 
 xhost +
 sudo docker run -it \
