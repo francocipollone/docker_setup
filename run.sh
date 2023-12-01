@@ -60,6 +60,7 @@ sudo docker run -it \
        -v ${CURRENT_FOLDER_PATH_PARENT}:$WORKSPACE_CONTAINER \
        -v $SSH_PATH:$SSH_PATH \
        --privileged \
+       --net=host \
        --name $CONTAINER_NAME $IMAGE_NAME
 xhost -
 
