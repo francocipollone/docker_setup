@@ -5,6 +5,22 @@
 How many times have you had to create a docker setup for code development or for trying any other library?
 The idea of this repository is to ease the path of setting up the environment.
 
+## Prerequisites
+
+It is a requirement to have `docker engine` already installed in the host machine.
+
+* See [Docker Installation Guide](https://docs.docker.com/engine/install/ubuntu/)
+
+For NVIDIA GPU support, `nvidia-container-toolkit` should be installed. *Skip this step if you don't have an NVIDIA graphics card*
+
+
+* Make sure you have the drivers installed:
+  ```sh
+  nvidia-smi
+  ```
+* See [NVIDIA Container Toolkit Installation Guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
+
+
 ## Usage
 
 Clone this repo at the same level as the code you want to add as a volume into a container.
